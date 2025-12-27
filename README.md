@@ -30,7 +30,9 @@ Inner layers never depend on outer layers
 Business logic is isolated and framework-agnostic
 
 1️⃣ Domain Layer (Core Business)
+
 📌 Contains pure business rules and models
+
 📌 No dependency on frameworks, databases, or UI
 
 Domain
