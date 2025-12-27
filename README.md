@@ -43,42 +43,34 @@ Business logic is isolated and framework-agnostic
 Domain
 │
 ├── Entities
-
 │   └── Customer.cs
 
 │
 ├── ValueObjects
-
 │   └── PhoneNumber.cs
 
 │
 ├── DomainServices
-
 │   └── CustomerDomainService.cs
 
 │
 ├── DomainEvents
-
 │   └── CustomerRegisteredEvent.cs
 
 │
 ├── Interfaces
-
 │   └── ICustomerRepository.cs
 
 │
 ├── Enums
-
 │   └── CustomerStatus.cs
 
 │
 ├── Exceptions
-
 │   └── DomainException.cs
 
 │
 └── Constants
-
     └── DomainConstants.cs
     
 
