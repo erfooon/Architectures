@@ -1,231 +1,198 @@
-🏗 Architectures
-Clean Architecture – Project Layout
+🏗 Clean Architecture – Project Structure
 
-This repository follows Clean Architecture, focusing on separation of concerns, testability, and independence from frameworks and technologies.
+This repository follows Clean Architecture, focusing on separation of concerns, framework independence, and high testability.
 
-📁 Solution Structure
-src
-│
-├── Domain
+📁 Project Structure (High-Level)
 
-├── Application
+🧱 Domain
 
-├── Infrastructure
+⚡ Application
 
-└── Presentation (Web / API)
+🔌 Infrastructure
 
-🧠 Dependency Rule (Core Principle)
+🎭 Presentation (Web / API)
+
+🔁 Dependency Rule
 
 Dependencies always point inward
 
-Infrastructure
+🔌 Infrastructure
     ↓
-Application
+⚡ Application
     ↓
-Domain
+🧱 Domain
 
-Web (API / MVC)
+🎭 Presentation (Web / API)
     ↓
-Application
+⚡ Application
     ↓
-Domain
+🧱 Domain
 
+🧱 Domain Layer
 
-Inner layers never depend on outer layers
-
-Business logic is isolated and framework-agnostic
-
-1️⃣ Domain Layer (Core Business)
-
-📌 Contains pure business rules and models
-📌 No dependency on frameworks, databases, or UI
-
-Domain
-│
-├── Entities
-│   └── Customer.cs
-
-│
-├── ValueObjects
-│   └── PhoneNumber.cs
-
-│
-├── DomainServices
-│   └── CustomerDomainService.cs
-
-│
-├── DomainEvents
-│   └── CustomerRegisteredEvent.cs
-
-│
-├── Interfaces
-│   └── ICustomerRepository.cs
-
-│
-├── Enums
-│   └── CustomerStatus.cs
-
-│
-├── Exceptions
-│   └── DomainException.cs
-
-│
-└── Constants
-    └── DomainConstants.cs
-    
+The core of the system, containing pure business logic.
+No dependency on frameworks, databases, or UI.
 
 Responsibilities
 
 Business rules and invariants
 
-Entities and Value Objects
+Entities & Value Objects
 
-Domain-specific logic
+Domain Services & Domain Events
 
-No technical or infrastructure concerns
+Constants, Enums, Domain Exceptions
 
-2️⃣ Application Layer (Use Cases)
+Folder Structure
 
-📌 Contains application-specific business logic
-📌 Orchestrates Domain objects to fulfill system use cases
+📂 Entities
 
-Application
-│
-├── UseCases
-│   └── Customers
-│       └── ImportCustomer
-│           └── ImportCustomerUseCase.cs
-│
-├── Services
-│   └── CustomerApplicationService.cs
-│
-├── DTOs
-│   └── ExternalCustomerDto.cs
-│
-├── Interfaces
-│   ├── Repositories
-│   │   └── ICustomerRepository.cs
-│   │
-│   └── ApiClients
-│       └── ICustomerApiClient.cs
-│
-├── Validators
-│   └── ImportCustomerValidator.cs
-│
-├── Mappings
-│   └── CustomerMappingProfile.cs
-│
-├── Behaviors
-│   └── LoggingBehavior.cs   (MediatR Pipeline)
-│
-└── Common
-    └── Result.cs
+Customer.cs – main domain entity containing business logic.
 
-Responsibilities
+📂 ValueObjects
 
-Use case execution
+PhoneNumber.cs – immutable objects representing domain concepts.
 
-Input validation
+🛠 DomainServices
 
-DTO definitions
+CustomerDomainService.cs – business logic that doesn’t belong to a single entity.
 
-Interfaces (contracts) for persistence and external services
+🎉 DomainEvents
 
-Application-level workflows
+CustomerRegisteredEvent.cs – important events within the domain.
 
-3️⃣ Infrastructure Layer (Technical Details)
+🔗 Interfaces
 
-📌 Contains implementations of interfaces
-📌 Handles external concerns like databases, APIs, caching, messaging
+ICustomerRepository.cs – repository contracts (no implementation here).
 
-Infrastructure
-│
-├── Persistence
-│   ├── DbContext
-│   │   └── AppDbContext.cs
-│   │
-│   ├── Configurations
-│   │   └── CustomerConfiguration.cs
-│   │
-│   └── Migrations
-│
-├── Repositories
-│   └── CustomerRepository.cs
-│
-├── ApiClients
-│   └── CustomerApiClient.cs
-│
-├── Messaging
-│   └── EmailService.cs
-│
-├── Caching
-│   └── RedisCacheService.cs
-│
-├── Files
-│   └── FileStorageService.cs
-│
-└── DependencyInjection
-    └── InfrastructureServiceCollection.cs
+🏷 Enums
+
+CustomerStatus.cs – meaningful fixed values.
+
+❌ Exceptions
+
+DomainException.cs – domain-specific exceptions.
+
+🔒 Constants
+
+DomainConstants.cs – domain-wide constant values.
+
+⚡ Application Layer
+
+Implements use cases and coordinates domain entities.
 
 Responsibilities
 
-EF Core & database access
+Use case execution / workflows
 
-External API communication
+DTOs for input/output
 
-File system, caching, messaging
+Interfaces for repositories & external services
 
-Dependency Injection configuration
+Validators & Mapping Profiles
 
-4️⃣ Presentation Layer (Web / API)
+Application-level services
 
-📌 Entry point of the system
-📌 Handles HTTP communication and user interaction
+Folder Structure
 
-Presentation
-│
-├── Controllers
-│   └── CustomerController.cs
-│
-├── Contracts
-│   ├── Requests
-│   │   └── ImportCustomerRequest.cs
-│   │
-│   └── Responses
-│       └── CustomerResponse.cs
-│
-├── Middlewares
-│   └── ExceptionMiddleware.cs
-│
-├── Filters
-│   └── AuthorizationFilter.cs
-│
-├── Extensions
-│   └── PresentationServiceCollection.cs
-│
-├── Program.cs
-└── appsettings.json
+📂 UseCases → Customers/ImportCustomer/ImportCustomerUseCase.cs
+
+🛠 Services → CustomerApplicationService.cs
+
+📄 DTOs → ExternalCustomerDto.cs
+
+🔗 Interfaces
+
+Repositories → ICustomerRepository.cs
+
+ApiClients → ICustomerApiClient.cs
+
+✅ Validators → ImportCustomerValidator.cs
+
+🖼 Mappings → CustomerMappingProfile.cs
+
+🔄 Behaviors → LoggingBehavior.cs (for MediatR pipeline)
+
+📦 Common → Result.cs
+
+🔌 Infrastructure Layer
+
+Technical implementations for Application layer interfaces.
 
 Responsibilities
 
-HTTP endpoints
+EF Core / database access
 
-Request / Response models
+External API clients
 
-Middleware and filters
+Caching, messaging, file storage
 
-Composition Root (DI registration)
+Dependency Injection
 
-No business logic
+Folder Structure
 
-✅ Architecture Benefits
+📂 Persistence
 
-✔ High testability
+DbContext → AppDbContext.cs
 
-✔ Clear separation of concerns
+Configurations → CustomerConfiguration.cs
 
-✔ Framework-independent core
+Migrations
 
-✔ Scalable and maintainable
+📂 Repositories → CustomerRepository.cs
 
-✔ Suitable for enterprise systems (Banking, ERP, Insurance)
+🌐 ApiClients → CustomerApiClient.cs
+
+📧 Messaging → EmailService.cs
+
+🗄 Caching → RedisCacheService.cs
+
+📁 Files → FileStorageService.cs
+
+⚙ DependencyInjection → InfrastructureServiceCollection.cs
+
+🎭 Presentation Layer (Web / API)
+
+Entry point of the system, handles HTTP requests and user interaction.
+
+Responsibilities
+
+Controllers for endpoints
+
+Request / Response models (Contracts)
+
+Middleware & Filters
+
+Composition Root (Program.cs / DI registration)
+
+Folder Structure
+
+📂 Controllers → CustomerController.cs
+
+📄 Contracts
+
+Requests → ImportCustomerRequest.cs
+
+Responses → CustomerResponse.cs
+
+⚙ Middlewares → ExceptionMiddleware.cs
+
+🔒 Filters → AuthorizationFilter.cs
+
+🧩 Extensions → PresentationServiceCollection.cs
+
+Program.cs
+
+appsettings.json
+
+✅ Key Benefits of Clean Architecture
+
+🧪 High testability & maintainability
+
+💡 Clear separation of concerns
+
+🔧 Framework-independent domain core
+
+📈 Scalable for enterprise applications (Banking, ERP, Insurance)
+
+🔄 Easy to extend & refactor
