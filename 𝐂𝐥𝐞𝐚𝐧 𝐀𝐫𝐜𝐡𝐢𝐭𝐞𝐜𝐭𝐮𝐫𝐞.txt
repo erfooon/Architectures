@@ -1,0 +1,84 @@
+𝐂𝐥𝐞𝐚𝐧 𝐀𝐫𝐜𝐡𝐢𝐭𝐞𝐜𝐭𝐮𝐫𝐞 𝐦𝐞𝐞𝐭𝐬 𝐕𝐞𝐫𝐭𝐢𝐜𝐚𝐥 𝐒𝐥𝐢𝐜𝐞𝐬 — 𝐇𝐨𝐰 𝐈 𝐒𝐭𝐫𝐮𝐜𝐭𝐮𝐫𝐞 .𝐍𝐄𝐓 𝐀𝐩𝐩𝐬
+
+Clean Architecture gives clear boundaries.
+Vertical Slice Architecture gives clear features.
+
+Together, the codebase becomes easier to navigate because everything is grouped by what the app does, not only by technical type.
+
+𝟏) 𝐃𝐨𝐦𝐚𝐢𝐧 
+
+This is the business core. No EF Core. No web. No external dependencies.
+
+📁 Domain
+├── 📁 Constants
+├── 📁 Units
+│  ├── Unit.cs
+│  ├── IUnitRepository.cs
+│  ├── UnitCreatedDomainEvent.cs
+│  └── UnitErrors.cs
+└── 📁 UnitGroups
+
+𝟐) 𝐀𝐩𝐩𝐥𝐢𝐜𝐚𝐭𝐢𝐨𝐧
+
+Instead of “Services” folders, everything is grouped by feature.
+
+📁 Application
+├── 📁 Abstractions
+├── 📁 Behaviors
+├── 📁 Exceptions
+├── 📁 Messaging
+│  ├── DomainEventHandler.cs
+│  ├── IDomainEventHandler.cs
+│  └── IRequestHandler.cs
+├── 📁 Units
+│  ├── 📁 CreateUnit
+│  │  ├── CreateUnitCommand.cs
+│  │  ├── CreateUnitCommandHandler.cs
+│  │  └── CreateUnitCommandValidator.cs
+│  ├── 📁 UpdateUnit
+│  ├── 📁 DeleteUnit
+│  ├── 📁 GetUnit
+│  └── 📁 GetUnits
+└── 📁 UnitGroups
+
+✅ Each slice contains everything for that use case: Request → Validation → Handler → Response.
+
+𝟑) 𝐈𝐧𝐟𝐫𝐚𝐬𝐭𝐫𝐮𝐜𝐭𝐮𝐫𝐞 
+
+This layer handles how things actually work.
+Databases, EF Core, messaging, and external services live here.
+
+📁 Infrastructure
+├── 📁 Database
+│  ├── 📁 Migrations
+│  └── ApplicationDbContext.cs
+├── 📁 Units
+│  ├── UnitConfiguration.cs
+│  └── UnitRepository.cs
+├── 📁 UnitGroups
+├── 📁 Messaging
+└── DependencyInjection.cs
+
+𝟒) 𝐏𝐫𝐞𝐬𝐞𝐧𝐭𝐚𝐭𝐢𝐨𝐧
+
+This layer is responsible for receiving requests and returning responses.
+It should stay thin and contain no business logic.
+
+📁 Presentation
+├── 📁 Units
+│  ├── CreateUnit.cs
+│  ├── UpdateUnit.cs
+│  ├── DeleteUnit.cs
+│  ├── GetUnit.cs
+│  └── GetUnits.cs
+├── 📁 UnitGroups
+├── 📁 Middlewares
+└── Program.cs
+
+🧠 Subscribe to my free newsletter – .𝙉𝙀𝙏 𝙒𝙚𝙚𝙠𝙡𝙮 𝙏𝙞𝙥𝙨 𝙗𝙮 𝙋𝙤𝙤𝙧𝙣𝙖. Get simple, practical tips on .NET, ASP.NET Core, EF Core, AI and more every week.👇 
+
+👉 https://lnkd.in/gZebJJMi
+
+♻️ If you found this helpful, consider reposting to help others in the community.
+
+👉 Follow me, Poorna Soysa, and hit the 🔔 on my profile so you don’t miss upcoming .NET tips and deep dives.
